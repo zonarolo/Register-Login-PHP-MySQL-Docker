@@ -10,7 +10,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=123
-      - MYSQL_DATABASE=curso_udemy
+      - MYSQL_DATABASE=registros
       - MYSQL_USER=root
       - MYSQL_PASSWORD=123
     ports:
@@ -19,10 +19,15 @@ services:
     container_name: php72
     build:
       context: ./
+      args:
+        user: zonarolo
+        uid: 1000
     links:
       - "mysql:database"
     volumes:
       - ./src:/var/www/html
+    environment:
+      - APACHE_RUN_USER=#1000
     ports:
       - 8000:80
     depends_on:
